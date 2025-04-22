@@ -1,0 +1,168 @@
+CREATE TABLE Brands (
+    BrandID INT PRIMARY KEY AUTO_INCREMENT,
+    BrandName VARCHAR(100) NOT NULL,
+    Description TEXT
+);
+
+
+CREATE TABLE Sizes (
+    SizeID INT PRIMARY KEY AUTO_INCREMENT,
+    SizeLabel VARCHAR(10) NOT NULL,
+    SizeDescription VARCHAR(100)
+);
+
+
+CREATE TABLE Categories (
+    CategoryID INT PRIMARY KEY AUTO_INCREMENT,
+    CategoryName VARCHAR(100) NOT NULL,
+    Description TEXT
+);
+
+
+CREATE TABLE Colors (
+    ColorID INT PRIMARY KEY AUTO_INCREMENT,
+    ColorName VARCHAR(50) NOT NULL,
+    ColorCode VARCHAR(7) -- e.g., #FFFFFF
+);
+
+
+CREATE TABLE WearTypes (
+    WearTypeID INT PRIMARY KEY AUTO_INCREMENT,
+    WearTypeName VARCHAR(50) NOT NULL,
+    Description TEXT
+);
+
+
+CREATE TABLE Gender (
+    GenderID INT PRIMARY KEY AUTO_INCREMENT,
+    GenderLabel VARCHAR(10) NOT NULL
+);
+
+
+CREATE TABLE Discounts (
+    DiscountID INT PRIMARY KEY AUTO_INCREMENT,
+    DiscountLabel VARCHAR(50) NOT NULL,
+    DiscountPercentage DECIMAL(5, 2), -- e.g., 10.00 for 10%
+    StartDate DATE,
+    EndDate DATE
+);
+
+
+CREATE TABLE Products (
+    ProductID INT PRIMARY KEY AUTO_INCREMENT,
+    ProductName VARCHAR(100) NOT NULL,
+    BrandID INT,
+    CategoryID INT,
+    WearTypeID INT,
+    GenderID INT,
+    ColorID INT,
+    SizeID INT,
+    Price DECIMAL(10, 2),
+    DiscountID INT,
+    Description TEXT,
+    ImageURL VARCHAR(255),
+    FOREIGN KEY (BrandID) REFERENCES Brands(BrandID),
+    FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID),
+    FOREIGN KEY (WearTypeID) REFERENCES WearTypes(WearTypeID),
+    FOREIGN KEY (GenderID) REFERENCES Gender(GenderID),
+    FOREIGN KEY (ColorID) REFERENCES Colors(ColorID),
+    FOREIGN KEY (SizeID) REFERENCES Sizes(SizeID),
+    FOREIGN KEY (DiscountID) REFERENCES Discounts(DiscountID)
+);
+
+
+CREATE TABLE Stock (
+    StockID INT PRIMARY KEY AUTO_INCREMENT,
+    ProductID INT,
+    Quantity INT NOT NULL,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+
+
+CREATE TABLE Users (
+    UserID INT PRIMARY KEY AUTO_INCREMENT,
+    Username VARCHAR(50) NOT NULL UNIQUE,
+    PasswordHash VARCHAR(255) NOT NULL,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    Email VARCHAR(100) NOT NULL UNIQUE,
+    PhoneNumber VARCHAR(15),
+    Address TEXT,
+    RegistrationDate DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE Admin (
+    AdminID INT PRIMARY KEY AUTO_INCREMENT,
+    UserID INT,
+    Role VARCHAR(50) NOT NULL,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID)
+);
+
+
+CREATE TABLE Sales (
+    SaleID INT PRIMARY KEY AUTO_INCREMENT,
+    UserID INT,
+    ProductID INT,
+    Quantity INT NOT NULL,
+    SalePrice DECIMAL(10, 2) NOT NULL,
+    SaleDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+
+
+Relationships
+Brands: Products belong to brands.
+Sizes: Products have sizes.
+Categories: Products belong to categories.
+Colors: Products have colors.
+Wear Types: Products belong to wear types.
+Gender: Products are gender-specific.
+Discounts: Products may have discounts.
+Stock: Tracks the quantity of each product.
+Users: Customers using the website.
+Admin: Admins managing the website.
+Sales: Records of sales transactions.
+
+1. Sales Reports
+Daily Sales Report: Total sales, quantity sold, and revenue generated on a daily basis.
+Monthly Sales Report: Total sales, quantity sold, and revenue generated on a monthly basis.
+Sales by Product Report: Sales figures for each product, including quantity sold and revenue generated.
+Sales by Category Report: Sales figures for each category, including quantity sold and revenue generated.
+Sales by Brand Report: Sales figures for each brand, including quantity sold and revenue generated.
+Sales by Gender Report: Sales figures split by gender-specific products.
+Top-Selling Products Report: List of the top-selling products based on quantity sold or revenue generated.
+Sales by Discount Report: Sales figures for products with discounts applied, showing the impact of discounts on sales.
+2. Inventory Reports
+Stock Levels Report: Current stock levels for each product.
+Low Stock Report: List of products with stock levels below a certain threshold.
+Out of Stock Report: List of products that are currently out of stock.
+Stock Movement Report: Historical changes in stock levels for each product.
+3. User Reports
+New Users Report: Number of new users registered on a daily, weekly, or monthly basis.
+Active Users Report: Number of users who made a purchase within a specific time frame.
+User Demographics Report: Breakdown of users by demographic information such as age, gender, location.
+4. Product Performance Reports
+Product Performance by Category: Analysis of how products in different categories are performing in terms of sales and revenue.
+Product Performance by Brand: Analysis of how products from different brands are performing in terms of sales and revenue.
+Product Performance by Color: Analysis of how products in different colors are performing in terms of sales and revenue.
+Product Performance by Size: Analysis of how products in different sizes are performing in terms of sales and revenue.
+Product Performance by Wear Type: Analysis of how products of different wear types (pants, shirts, shoes, jackets) are performing in terms of sales and revenue.
+5. Discount and Promotion Reports
+Discount Usage Report: Analysis of how discounts and promotions are impacting sales.
+Discount Effectiveness Report: Comparison of sales before and after applying discounts.
+6. Financial Reports
+Revenue Report: Total revenue generated over a specific period.
+Profit Report: Profit margins for each product after deducting costs and discounts.
+Sales Tax Report: Breakdown of sales tax collected over a specific period.
+7. Admin Activity Reports
+Admin Activity Log Report: Log of actions performed by admins, including changes to products, stock levels, and user accounts.
+Admin Sales Report: Sales figures attributed to actions or promotions initiated by specific admins.
+8. Customer Order Reports
+Order History Report: Detailed history of orders placed by each customer.
+Order Fulfillment Report: Status of orders, including pending, shipped, and delivered orders.
+Return and Refund Report: Details of returned items and refunds processed.
+9. Customer Feedback Reports
+Customer Reviews Report: List of customer reviews and ratings for each product.
+Customer Complaints Report: Summary of customer complaints and resolutions.
