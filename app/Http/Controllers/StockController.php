@@ -79,19 +79,7 @@ class StockController extends Controller
     }
 
     public function selectProduct(Request $request){
-        //echo "<pre>";
-        //print_r($request->all());
-        //echo "Lancer";
-      //  $jsonString = json_encode('hello'); 
-    //    return $jsonString;
-        /*return response()->json([
-            'message' => 'Value received',
-            'value' => 'hello'
-        ]);*/
-//        return 100;
-
         $selectedValue = $request->input('value');
-
         $products = Product::select(
             'products.id',
             'products.product_name',
@@ -119,18 +107,6 @@ class StockController extends Controller
         ->where('products.id', '=', $selectedValue)
         ->get();
 
-        //$jsonString = json_encode($products); 
-        //return $jsonString;
-
-        // Proper JSON response
-        /*return response()->json([
-            'message' => 'Product selected successfully',
-            'value' => $selectedValue,
-            'result' => $products
-        ], 200);*/
-        //return true;
-
-        //if ($products[0]['id']) {
             return response()->json([
                 'data' => [
                     'id' => $products[0]['id'],
@@ -150,11 +126,6 @@ class StockController extends Controller
                     'end_date' => $products[0]['end_date']
                 ]
             ]);
-        //}
-
-        //return response()->json(['error' => 'Details not found.'], 404);
-
-        //return json_encode($products);
     }
 
     /**
@@ -167,12 +138,20 @@ class StockController extends Controller
         $request->validate([
             'product'=>'required',
             'quantity'=>'regex:/^([0-9]|[1-9][0-9])$/i',
-            'quantity'=>'required|numeric'
+            'quantity'=>'required|numeric',
+            'weartype'=>'required',
+            'gender'=>'required',
+            'color'=>'required',
+            'size'=>'required'
         ],[
             'product.required'=>'The product field is required.',
             'quantity.required'=>'The quantity field is required.',
             'quantity.numeric'=>'The quantity must be numeric.',
-            'quantity.regex'=>'The quantity must be integer.'
+            'quantity.regex'=>'The quantity must be integer.',
+            'weartype.required'=>'The weartype field is required.',
+            'gender.required'=>'The gender field is required.',
+            'color.required'=>'The color field is required.',
+            'size.required'=>'The size field is required.'
         ]);
     }
 

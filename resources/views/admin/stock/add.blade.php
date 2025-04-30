@@ -52,8 +52,9 @@
         <div class="col-md">
           <div class="form-floating">
             <label for="floatingInputGrid">Wear Type</label>
-            <input type="email" class="form-control" id="weartype"   disabled>
+            <input type="email" class="form-control" id="weartype" readonly>
             <select name="weartype" id="weartype" class="form-control">
+              <option value="" disabled {{old('weartype') ? '' : 'selected' }}>Select a Wear Type</option>
               @foreach($weartypes as $weartype)
                 <option value="{{$weartype->id}}">{{$weartype->weartypes_name}}</option>
               @endforeach
@@ -64,8 +65,9 @@
         <div class="col-md">
           <div class="form-floating">
             <label for="floatingInputGrid">Gender</label>
+            <input type="email" class="form-control" id="gender" readonly>
             <select name="gender" id="gender" class="form-control">
-              <option value="" disabled {{old('genders') ? '' : 'selected' }}>Select a Gender</option>
+              <option value="" disabled {{old('gender') ? '' : 'selected' }}>Select a Gender</option>
               @foreach($genders as $gender)
                 <option value="{{$gender->id}}" {{ old('gender') == $gender->id ? 'selected' : '' }}>{{$gender->gender_name}}</option>
               @endforeach
@@ -80,6 +82,7 @@
         <div class="col-md">
           <div class="form-floating">
             <label for="floatingInputGrid">Color</label>
+            <input type="email" class="form-control" id="color" readonly>
             <select name="color" id="color" class="form-control">
               <option value="" disabled {{old('color') ? '' : 'selected' }}>Select a color</option>
               @foreach($colors as $color)
@@ -92,6 +95,7 @@
         <div class="col-md">
           <div class="form-floating">
             <label for="floatingInputGrid">Size</label>
+            <input type="email" class="form-control" id="size" readonly>
             <select name="size" id="size" class="form-control">
               <option value="" disabled {{old('sizes') ? '' : 'selected' }}>Select a size</option>
               @foreach($sizes as $size)
@@ -148,13 +152,11 @@
 
   <script>
     $(document).ready(function () {
-      //document.getElementById('product').addEventListener('change', function() {
         $('#product_dropdown').on('change', function () {
         const selectedValue = this.value;
         $.ajax({
           method: 'POST',
           url: '{{ url("/stock/select-product") }}',
-          //dataType: 'application/json',
           data: {
             value: selectedValue
           },
@@ -163,17 +165,12 @@
           },
           success: function(response){
             try {
-              console.log("Mitsubishi Lancer");
-              //console.log(response.data['brand_name']);
-//              const jsonResponse = json_decode(response); // Manually parse the response
-             // const jsonResponse = JSON.parse(response);
-              //console.log(jsonResponse);
-              
               $("#productid").val(response.data['id']);
               $("#productname").val(response.data['product_name']);
               $("#brand").val(response.data['brand_name']);
               $("#category").val(response.data['category_name']);
               $("#weartype").val(response.data['weartypes_name']);
+              $("#weartypedd").val($("#weartype").val());
               $("#gender").val(response.data['gender_name']);
               $("#color").val(response.data['color_name']);
               $("#size").val(response.data['size_label']);
@@ -199,35 +196,10 @@
                 console.error('Failed to parse JSON:', e);
                 console.log('Raw Response:', xhr.responseText);
             }
-            /*console.error('Status:', status);
-            console.error('Error:', error);
-            console.log('Response Text in Error:', xhr.responseText); // Log the raw response
-            console.log('XHR Object:', xhr); // Log the complete XHR object*/
           }
         });
 
-        /*if(selectedValue){
-          fetch('/stock/select-product', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            body: JSON.stringify({ value: selectedValue })
-          })
-          .then(response => {
-            if(!response.ok){
-              throw new Error('Network Error: '+response.statusText);
-            }
-            return response;
-          })
-          .then(data => {
-            console.log('Response from server: ', data);
-          })
-          .catch(error => {
-            console.error('Error:', error.message);
-          });
-        }*/
+
       });
     });
   </script>
