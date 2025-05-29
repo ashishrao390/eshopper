@@ -5,7 +5,7 @@
 <div class="container">
   <!-- Content here -->
 
-<form method="POST" action="{{url('/')}}/user-registration">
+<form method="POST" action="{{url('/')}}/registration">
     @csrf
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">User Name</label>
@@ -34,11 +34,11 @@
   </div>
   <div class="mb-3">
     <div class="form-check form-check-inline">
-      <input type="radio" id="male" name="gender" value="Male" class="form-check-input" checked value="{{old('gender')}}">
+      <input type="radio" id="male" name="gender" value="1" class="form-check-input" checked value="{{old('gender')}}">
       <label for="html" class="form-check-label">Male</label><br>
     </div>  
     <div class="form-check form-check-inline">
-      <input type="radio" id="female" name="gender" value="Female" class="form-check-input" value="{{old('gender')}}">
+      <input type="radio" id="female" name="gender" value="2" class="form-check-input" value="{{old('gender')}}">
       <label for="css" class="form-check-label">Female</label><br>
     </div>  
     <div class="form-check form-check-inline">
@@ -105,28 +105,36 @@
   </div>
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Registration Date</label>
-    <input type="text" class="form-control"  aria-describedby="emailHelp" name="rdate" value="{{old('rdate')}}">
+    <input type="text" id="datepicker" class="form-control" name="rdate" value="{{old('rdate')}}">
+    <input type="text" id="calendar" name="start_date" placeholder="Select date" required>
+
     @error('rdate')<x-message-component msg={{$message}} cls="danger"/>@enderror
   </div>  
   <div class="mb-3">  
     <label class="form-label">
-      <input type="checkbox" id="terms" name="terms" value="{{old('terms')}}"> I agree to the <a href="/terms-and-conditions" target="_blank">Terms and Conditions</a>
+      <input type="checkbox" id="terms" name="terms" value="1"> I agree to the <a href="/terms-and-conditions" target="_blank">Terms and Conditions</a>
     </label>
     @error('terms')<x-message-component msg={{$message}} cls="danger"/>@enderror
   </div>  
   <div class="mb-3">
     <label class="form-label">
-      <input type="checkbox" id="newsletter" name="newsletter" value="{{old('newsletter')}}"> Subscribe to our newsletter
+      <input type="checkbox" id="newsletter" name="newsletter" value="1"> Subscribe to our newsletter
     </label>
     @error('newsletter')<x-message-component msg={{$message}} cls="danger"/>@enderror
   </div>
   <div class="mb-3">
     <label class="form-label">
-      <input type="checkbox" id="promotions" name="promotions" value="{{old('promotions')}}"> Receive promotional emails
+      <input type="checkbox" id="promotions" name="promotions" value="1"> Receive promotional emails
     </label>
     @error('promotions')<x-message-component msg={{$message}} cls="danger"/>@enderror
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        flatpickr("#calendar", {
+            dateFormat: "Y-m-d"
+        });
+    </script>
 @include('footer')

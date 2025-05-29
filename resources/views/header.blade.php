@@ -9,6 +9,7 @@
     <meta content="Free HTML Templates" name="description">
     <!-- Favicon -->
     <link href="{{url('favicon.ico')}}" rel="icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -143,27 +144,35 @@
                                 </div>
                             </div>
                             <a href="{{url('/contact')}}" class="nav-item nav-link">Contact</a>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Admin</a>
-                                <div class="dropdown-menu rounded-0 m-0">
-                                    <a href="{{url('/brand')}}" class="dropdown-item">Brand</a>
-                                    <a href="{{url('/sizes')}}" class="dropdown-item">Sizes</a>
-                                    <a href="{{url('/categories')}}" class="dropdown-item">Categories</a>
-                                    <a href="{{url('/colors')}}" class="dropdown-item">Colors</a>
-                                    <a href="{{url('/weartypes')}}" class="dropdown-item">Wear Types</a>
-                                    <a href="{{url('/gender')}}" class="dropdown-item">Gender</a>
-                                    <a href="{{url('/discounts')}}" class="dropdown-item">Discounts</a>
-                                    <a href="{{url('/products')}}" class="dropdown-item">Products</a>
-                                    <a href="{{url('/stock')}}" class="dropdown-item">Stock</a>
-                                    <a href="{{url('/admin')}}" class="dropdown-item">Admin</a>
-                                    <a href="{{url('/user')}}" class="dropdown-item">Users</a>
-                                    <a href="{{url('/sales')}}" class="dropdown-item">Sales</a>
+                            @if(Auth::check())
+                                <div class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Admin</a>
+                                    <div class="dropdown-menu rounded-0 m-0">
+                                        <a href="{{url('/brand')}}" class="dropdown-item">Brand</a>
+                                        <a href="{{url('/sizes')}}" class="dropdown-item">Sizes</a>
+                                        <a href="{{url('/categories')}}" class="dropdown-item">Categories</a>
+                                        <a href="{{url('/colors')}}" class="dropdown-item">Colors</a>
+                                        <a href="{{url('/weartypes')}}" class="dropdown-item">Wear Types</a>
+                                        <a href="{{url('/gender')}}" class="dropdown-item">Gender</a>
+                                        <a href="{{url('/discounts')}}" class="dropdown-item">Discounts</a>
+                                        <a href="{{url('/products')}}" class="dropdown-item">Products</a>
+                                        <a href="{{url('/stock')}}" class="dropdown-item">Stock</a>
+                                        <a href="{{url('/admin')}}" class="dropdown-item">Admin</a>
+                                        <a href="{{url('/user')}}" class="dropdown-item">Users</a>
+                                        <a href="{{url('/sales')}}" class="dropdown-item">Sales</a>
+                                    </div>
                                 </div>
+                            @endif
+                        </div>
+                        @if(!Auth::check())
+                            <div class="navbar-nav ml-auto py-0">
+                                <a href="{{url('/login')}}" class="nav-item nav-link">Login</a>
+                                <a href="{{url('/user/create')}}" class="nav-item nav-link">Register</a>
                             </div>
-                        </div>
-                        <div class="navbar-nav ml-auto py-0">
-                            <a href="{{url('/user-login')}}" class="nav-item nav-link">Login</a>
-                            <a href="{{url('/user-registration')}}" class="nav-item nav-link">Register</a>
-                        </div>
+                        @else
+                            <div class="navbar-nav ml-auto py-0">
+                                <a href="{{url('/logout')}}" class="nav-item nav-link">Logout({{ Auth::user()->fname }} {{ Auth::user()->lname}})</a>
+                            </div>
+                        @endif
                     </div>
                 </nav>

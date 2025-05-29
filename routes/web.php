@@ -43,13 +43,14 @@ Route::get('/checkout', [CheckoutController::class, 'index']);
 
 Route::get('/contact', [ContactController::class, 'index']);
 
-Route::get('/user-registration', [UserController::class, 'getUserRegistration']);
-Route::post('/user-registration', [UserController::class, 'postUserRegistration']);
+//Route::get('/registration', [UserController::class, 'getUserRegistration']);
+//Route::post('/registration', [UserController::class, 'postUserRegistration']);
 
-Route::get('/user-login', [LoginController::class, 'getUserLogin']);
-Route::post('/user-login', [LoginController::class, 'postUserLogin']);
+Route::get('/login', [LoginController::class, 'getUserLogin'])->name('login');
+Route::post('/login', [LoginController::class, 'postUserLogin'])->name('login.perform');
+Route::get('/logout', [LoginController::class, 'logout']);
 
-Route::middleware(['admin'])->prefix('student')->group(function(){
+Route::middleware(['auth','admin'])->prefix('student')->group(function(){
     Route::get('/', [StudentController::class, 'index']);
     Route::get('/create',[StudentController::class, 'create']);
     Route::post('/',[StudentController::class, 'store']);
@@ -59,7 +60,7 @@ Route::middleware(['admin'])->prefix('student')->group(function(){
     Route::delete('/{id}',[StudentController::class, 'destroy']);    
 })->middleware('Admin');
 
-Route::middleware(['admin'])->prefix('brand')->group(function(){
+Route::middleware(['auth','admin'])->prefix('brand')->group(function(){
     Route::get('/', [BrandController::class, 'index']);
     Route::get('/create',[BrandController::class, 'create']);
     Route::post('/',[BrandController::class, 'store']);
@@ -164,8 +165,8 @@ Route::post('/admin/select-email', [AdminController::class, 'selectEmail']);
 
 Route::middleware(['admin'])->prefix('user')->group(function(){
     Route::get('/', [UserController::class, 'index']);
-    Route::get('/create',[UserController::class, 'create']);
-    Route::post('/',[UserController::class, 'store']);
+    Route::get('/create',[UserController::class, 'getUserRegistration']);
+    Route::post('/',[UserController::class, 'postUserRegistration']);
     Route::get('/{id}',[UserController::class, 'show']);
     Route::get('/{id}/edit',[UserController::class, 'edit']);
     Route::patch('/{id}',[UserController::class, 'update']);
