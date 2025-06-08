@@ -143,26 +143,30 @@
                                     <a href="{{url('/checkout')}}" class="dropdown-item">Checkout</a>
                                 </div>
                             </div>
-                            <a href="{{url('/contact')}}" class="nav-item nav-link">Contact</a>
-                            @if(Auth::check())
-                                <div class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Admin</a>
-                                    <div class="dropdown-menu rounded-0 m-0">
-                                        <a href="{{url('/brand')}}" class="dropdown-item">Brand</a>
-                                        <a href="{{url('/sizes')}}" class="dropdown-item">Sizes</a>
-                                        <a href="{{url('/categories')}}" class="dropdown-item">Categories</a>
-                                        <a href="{{url('/colors')}}" class="dropdown-item">Colors</a>
-                                        <a href="{{url('/weartypes')}}" class="dropdown-item">Wear Types</a>
-                                        <a href="{{url('/gender')}}" class="dropdown-item">Gender</a>
-                                        <a href="{{url('/discounts')}}" class="dropdown-item">Discounts</a>
-                                        <a href="{{url('/products')}}" class="dropdown-item">Products</a>
-                                        <a href="{{url('/stock')}}" class="dropdown-item">Stock</a>
-                                        <a href="{{url('/admin')}}" class="dropdown-item">Admin</a>
-                                        <a href="{{url('/user')}}" class="dropdown-item">Users</a>
-                                        <a href="{{url('/sales')}}" class="dropdown-item">Sales</a>
-                                    </div>
-                                </div>
-                            @endif
+                            <a href="{{url('/contact')}}" class="nav-item nav-link">Contact</a>                                
+                            @auth
+                                @if(Auth::user()->isAdmin())
+                                    @if(Auth::check())
+                                        <div class="nav-item dropdown">
+                                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Admin</a>
+                                            <div class="dropdown-menu rounded-0 m-0">
+                                                <a href="{{url('/brand')}}" class="dropdown-item">Brand</a>
+                                                <a href="{{url('/sizes')}}" class="dropdown-item">Sizes</a>
+                                                <a href="{{url('/categories')}}" class="dropdown-item">Categories</a>
+                                                <a href="{{url('/colors')}}" class="dropdown-item">Colors</a>
+                                                <a href="{{url('/weartypes')}}" class="dropdown-item">Wear Types</a>
+                                                <a href="{{url('/gender')}}" class="dropdown-item">Gender</a>
+                                                <a href="{{url('/discounts')}}" class="dropdown-item">Discounts</a>
+                                                <a href="{{url('/products')}}" class="dropdown-item">Products</a>
+                                                <a href="{{url('/stock')}}" class="dropdown-item">Stock</a>
+                                                <a href="{{url('/admin')}}" class="dropdown-item">Admin</a>
+                                                <a href="{{url('/user')}}" class="dropdown-item">Users</a>
+                                                <a href="{{url('/sales')}}" class="dropdown-item">Sales</a>
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endif
+                            @endauth
                         </div>
                         @if(!Auth::check())
                             <div class="navbar-nav ml-auto py-0">
