@@ -52,7 +52,9 @@ class CategoriesController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $category = Category::findOrFail($id);
+        $weartypes = Weartype::select('weartypes_name')->get();
+        return view('admin.categories.detail',['weartypes'=>$weartypes, 'category'=>$category]);
     }
 
     /**
@@ -60,7 +62,9 @@ class CategoriesController extends Controller
      */
     public function edit(string $id)
     {
-        print_r('edit');
+        $category = Category::findOrFail($id);
+        $weartypes = Weartype::select('weartypes_name')->get();
+        return view('admin.categories.edit',['weartypes'=>$weartypes, 'category'=>$category]);
     }
 
     /**
@@ -68,7 +72,21 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $category = Category::findOrFail($id);
+
+        $request->validate([
+            'categoryname'=>'required|min:3|max:12'
+        ],[
+            'categoryname.required'=>'The category name field is required.',
+            'categoryname.min'=>'The category name field must be at least 3 characters.',
+            'categoryname.max'=>'The category name field must not be greater than 12 characters.',
+        ]);
+
+        $category->update([
+            'category_name'=>$request->categoryname
+        ]);
+
+        return redirect(url('/categories'))->with('success','Category updated successfully.');
     }
 
     /**
