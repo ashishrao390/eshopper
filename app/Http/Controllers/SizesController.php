@@ -33,15 +33,15 @@ class SizesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'saleslabel'=>'required|min:1|max:4'
+            'sizelabel'=>'required|min:1|max:4'
         ],[
-            'saleslabel.required'=>'The sales label field is required.',
-            'saleslabel.min'=>'The sales label field must be at least 3 characters.',
-            'saleslabel.max'=>'The sales label field must not be greater than 12 characters.',
+            'sizelabel.required'=>'The size label field is required.',
+            'sizelabel.min'=>'The size label field must be at least 1 characters.',
+            'sizelabel.max'=>'The size label field must not be greater than 4 characters.',
         ]);
 
         Size::create([
-            'size_label'=>$request->saleslabel
+            'size_label'=>$request->sizelabel
         ]);
 
         return redirect(url('/sizes'))->with('success','Size created successfully.');
@@ -52,7 +52,9 @@ class SizesController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $size = Size::findOrFail($id);
+        $weartypes = Weartype::select('weartypes_name')->get();
+        return view('admin.sizes.detail', ['weartypes'=>$weartypes, 'size'=>$size]);
     }
 
     /**
@@ -60,7 +62,9 @@ class SizesController extends Controller
      */
     public function edit(string $id)
     {
-        print_r('edit');
+        $size = Size::findOrFail($id);
+        $weartypes = Weartype::select('weartypes_name')->get();
+        return view('admin.sizes.edit', ['weartypes'=>$weartypes, 'size'=>$size]);
     }
 
     /**
@@ -68,7 +72,21 @@ class SizesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $size = Size::findOrFail($id);
+
+        $request->validate([
+            'sizelabel'=>'required|min:1|max:4'
+        ],[
+            'sizelabel.required'=>'The size label field is required.',
+            'sizelabel.min'=>'The size label field must be at least 1 characters.',
+            'sizelabel.max'=>'The size label field must not be greater than 4 characters.',
+        ]);
+
+        $size->update([
+            'size_label'=>$request->sizelabel
+        ]);
+
+        return redirect(url('/sizes'))->with('success','Size updated successfully.');
     }
 
     /**

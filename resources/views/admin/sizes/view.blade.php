@@ -22,6 +22,7 @@
             <td>Size Label</td>
             <td>Created At</td>
             <td>Updated At</td>
+            <td>View</td>
             <td>Edit</td>
             <td>Delete</td>
         </tr>
@@ -31,6 +32,7 @@
             <td>{{$size->size_label}}</td>
             <td>{{date_format(date_create($size->created_at), "d-m-Y h:m:s")}}</td>
             <td>{{date_format(date_create($size->updated_at), "d-m-Y h:m:s")}}</td>
+            <td><a class="btn btn-link" href="{{url('/sizes').'/'.$size->id}}">View</a></td>
             <td><a class="btn btn-link" href="{{url('/sizes').'/'.$size->id.'/edit'}}">Edit</a></td>
             <td>
                 <form action="{{url('/sizes').'/'.$size->id}}" method="POST">
