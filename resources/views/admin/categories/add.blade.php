@@ -10,6 +10,7 @@
       <input type="text" class="form-control"  aria-describedby="emailHelp" name="categoryname" value="{{old('categoryname')}}">
       @error('categoryname')<x-message-component msg={{$message}} cls="danger"/>@enderror
     </div>
+    <a href="{{url('/categories')}}" class="btn btn-primary">Categories</a>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 </div>

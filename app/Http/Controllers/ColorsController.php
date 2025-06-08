@@ -52,7 +52,9 @@ class ColorsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $color = Color::findOrFail($id);
+        $weartypes = Weartype::select('weartypes_name')->get();
+        return view('admin.colors.detail', ['weartypes'=>$weartypes, 'color'=>$color]);
     }
 
     /**
@@ -60,7 +62,9 @@ class ColorsController extends Controller
      */
     public function edit(string $id)
     {
-        print_r('edit');
+        $color = Color::findOrFail($id);
+        $weartypes = Weartype::select('weartypes_name')->get();
+        return view('admin.colors.edit', ['weartypes'=>$weartypes, 'color'=>$color]);
     }
 
     /**
@@ -68,7 +72,21 @@ class ColorsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $color = Color::findOrFail($id);
+
+        $request->validate([
+            'colorname'=>'required|min:3|max:12'
+        ],[
+            'colorname.required'=>'The color name field is required.',
+            'colorname.min'=>'The color name field must be at least 3 characters.',
+            'colorname.max'=>'The color name field must not be greater than 12 characters.'
+        ]);
+
+        $color->update([
+            'color_name'=>$request->colorname
+        ]);
+
+        return redirect(url('/colors'))->with('success','Color updated successfully.');
     }
 
     /**

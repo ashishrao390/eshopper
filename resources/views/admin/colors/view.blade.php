@@ -23,6 +23,7 @@
     <th>Name</th>
     <th>Created at</th>
     <th>Updated at</th>
+    <th>View</th>
     <th>Edit</th>
     <th>Delete</th>
   </tr>
@@ -32,6 +33,7 @@
     <td><span class="color-circle" style="background-color: {{$color->color_name}};"></span> {{$color->color_name}}</td>
     <td>{{date_format(date_create($color->created_at),"d-m-Y h:m:s")}}</td>
     <td>{{date_format(date_create($color->updated_at), "d-m-Y h:m:s")}}</td>
+    <td><a class="btn btn-link" href="{{url('/colors').'/'.$color->id}}">View</a></td>
     <td><a class="btn btn-link" href="{{url('/colors').'/'.$color->id.'/edit'}}">Edit</a></td>
     <td>
       <form action="{{url('/colors').'/'.$color->id}}" method="POST">

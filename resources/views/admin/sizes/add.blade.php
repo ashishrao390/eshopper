@@ -10,6 +10,7 @@
       <input type="text" class="form-control"  aria-describedby="emailHelp" name="sizelabel" value="{{old('sizelabel')}}">
       @error('sizelabel')<x-message-component msg={{$message}} cls="danger"/>@enderror
     </div>
+    <a class="btn btn-primary" href="{{url('/sizes')}}">Sizes</a>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 </div>

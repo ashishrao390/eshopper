@@ -11,6 +11,7 @@
       <input type="text" class="form-control"  aria-describedby="emailHelp" name="brandname" value="{{old('brandname')}}">
       @error('brandname')<x-message-component msg={{$message}} cls="danger"/>@enderror
     </div>
+    <a href="{{url('/brand')}}" class="btn btn-primary">Brand</a>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 </div>
