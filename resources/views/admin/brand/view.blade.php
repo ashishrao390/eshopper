@@ -24,6 +24,7 @@
     <th>Name</th>
     <th>Created at</th>
     <th>Updated at</th>
+    <th>View</th>
     <th>Edit</th>
     <th>Delete</th>
   </tr>
@@ -33,6 +34,7 @@
     <td>{{$brand->brand_name}}</td>
     <td>{{date_format(date_create($brand->created_at),"d-m-Y h:m:s")}}</td>
     <td>{{date_format(date_create($brand->updated_at), "d-m-Y h:m:s")}}</td>
+    <td><a class="btn btn-link" href="{{url('/brand').'/'.$brand->id.''}}">View</a></td>
     <td><a class="btn btn-link" href="{{url('/brand').'/'.$brand->id.'/edit'}}">Edit</a></td>
     <td>
       <form action="{{url('/brand').'/'.$brand->id}}" method="POST">

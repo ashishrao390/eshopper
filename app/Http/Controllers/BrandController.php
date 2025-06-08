@@ -53,7 +53,9 @@ class BrandController extends Controller
      */
     public function show(string $id)
     {
-        echo "show";
+        $brand = Brand::find($id);
+        $weartypes = Weartype::select('weartypes_name')->get();
+        return view('admin.brand.detail',['weartypes'=>$weartypes, 'brand'=>$brand]);
     }
 
     /**
@@ -61,7 +63,9 @@ class BrandController extends Controller
      */
     public function edit(string $id)
     {
-        echo "edit";
+        $brand = Brand::find($id);
+        $weartypes = Weartype::select('weartypes_name')->get();
+        return view('admin.brand.edit',['weartypes'=>$weartypes, 'brand'=>$brand]);
     }
 
     /**
@@ -69,7 +73,22 @@ class BrandController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        echo "update";
+        $brand = Brand::findOrFail($id);
+
+        $request->validate([
+            'brandname'=>'required|min:3|max:12',
+        ],
+        [
+            'brandname.required' => 'The brand name field is required.',
+            'brandname.min' => 'The brand name field must be at least 3 characters.',
+            'brandname.max' => 'The brand name field must not be greater than 12 characters.',
+        ]);
+
+        $brand->update([
+            'brand_name' => $request->brandname
+        ]);
+
+        return redirect(url('/brand'))->with('success', 'Brand updated successfully.');
     }
 
     /**
