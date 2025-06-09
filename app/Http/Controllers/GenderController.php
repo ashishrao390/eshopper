@@ -52,7 +52,9 @@ class GenderController extends Controller
      */
     public function show(string $id)
     {
-        print_r('show');
+        $gender = Gender::find($id);
+        $weartypes = Weartype::select('weartypes_name')->get();
+        return view('admin.gender.detail',['weartypes'=>$weartypes, 'gender'=>$gender]);
     }
 
     /**
@@ -60,9 +62,9 @@ class GenderController extends Controller
      */
     public function edit(string $id)
     {
-//        echo "<pre>";
-        print_r('edit');
-//        die();
+        $gender = Gender::find($id);
+        $weartypes = Weartype::select('weartypes_name')->get();
+        return view('admin.gender.edit',['weartypes'=>$weartypes, 'gender'=>$gender]);
     }
 
     /**
@@ -70,7 +72,21 @@ class GenderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        print_r('update');
+        $gender = Gender::find($id);
+
+        $request->validate([
+            'gendername'=>'required|min:3|max:12'
+        ],[
+            'gendername.required'=>'The gender name field is required.',
+            'gendername.min'=>'The gender name field must be at least 3 characters.',
+            'gendername.max'=>'The gender name field must not be greater than 12 characters.'
+        ]);
+
+        $gender->update([
+            'gender_name'=>$request->gendername
+        ]);
+
+        return redirect(url('/gender'))->with('success', 'Gender updated successfully.');
     }
 
     /**

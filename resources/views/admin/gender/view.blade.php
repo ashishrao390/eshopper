@@ -23,6 +23,7 @@
     <th>Name</th>
     <th>Created at</th>
     <th>Updated at</th>
+    <th>View</th>
     <th>Edit</th>
     <th>Delete</th>
   </tr>
@@ -32,6 +33,7 @@
     <td>{{$gen->gender_name}}</td>
     <td>{{date_format(date_create($gen->created_at),"d-m-Y h:m:s")}}</td>
     <td>{{date_format(date_create($gen->updated_at), "d-m-Y h:m:s")}}</td>
+    <td><a class="btn btn-link" href="{{url('/gender/'.$gen->id)}}">View</a></td>
     <td><a class="btn btn-link" href="{{url('/gender/'.$gen->id.'/edit')}}">Edit</a></td>
     <td>
       <form method="POST" action="{{ url('gender').'/'.$gen->id }}">
