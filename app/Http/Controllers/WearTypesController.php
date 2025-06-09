@@ -51,7 +51,9 @@ class WearTypesController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $weartypes_1 = Weartype::find($id);
+        $weartypes = Weartype::select('weartypes_name')->get();
+        return view('admin.weartypes.detail',['weartypes'=>$weartypes, 'weartypes_1'=>$weartypes_1]);
     }
 
     /**
@@ -59,7 +61,9 @@ class WearTypesController extends Controller
      */
     public function edit(string $id)
     {
-        print_r('edit');
+        $weartypes_1 = Weartype::find($id);
+        $weartypes = Weartype::select('weartypes_name')->get();
+        return view('admin.weartypes.edit',['weartypes'=>$weartypes, 'weartypes_1'=>$weartypes_1]);
     }
 
     /**
@@ -67,7 +71,21 @@ class WearTypesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $weartypes_1 = Weartype::find($id);
+
+        $request->validate([
+            'weartype'=>'required|min:3|max:12'
+        ],[
+            'weartype.required'=>'The wear type field is required.',
+            'weartype.min'=>'The wear type field must be at least 3 characters.',
+            'weartype.max'=>'The wear type field must not be greater than 12 characters.'
+        ]);
+
+        $weartypes_1->update([
+            'weartypes_name'=>$request->weartype
+        ]);
+
+        return redirect(url('weartypes'))->with('success','Wear type updated successfully.');
     }
 
     /**

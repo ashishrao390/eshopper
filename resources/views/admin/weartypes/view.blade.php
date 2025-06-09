@@ -23,6 +23,7 @@
     <th>Name</th>
     <th>Created at</th>
     <th>Updated at</th>
+    <th>View</th>
     <th>Edit</th>
     <th>Delete</th>
   </tr>
@@ -32,6 +33,7 @@
     <td>{{$weartype->weartypes_name}}</td>
     <td>{{date_format(date_create($weartype->created_at),"d-m-Y h:m:s")}}</td>
     <td>{{date_format(date_create($weartype->updated_at), "d-m-Y h:m:s")}}</td>
+    <td><a class="btn btn-link" href="{{url('/weartypes').'/'.$weartype->id}}">View</a></td>
     <td><a class="btn btn-link" href="{{url('/weartypes').'/'.$weartype->id.'/edit'}}">Edit</a></td>
     <td>
       <form action="{{url('/weartypes').'/'.$weartype->id}}" method="POST">
