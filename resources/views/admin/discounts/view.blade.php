@@ -26,6 +26,7 @@
     <th>End Date</th>
     <th>Created at</th>
     <th>Updated at</th>
+    <th>View</th>
     <th>Edit</th>
     <th>Delete</th>
   </tr>
@@ -38,6 +39,7 @@
     <td>{{date_format(date_create($discount->end_date),"d-M")}}</td>
     <td>{{date_format(date_create($discount->created_at),"d-m-Y h:m:s")}}</td>
     <td>{{date_format(date_create($discount->updated_at), "d-m-Y h:m:s")}}</td>
+    <td><a class="btn btn-link" href="{{url('/discounts').'/'.$discount->id}}">View</a></td>
     <td><a class="btn btn-link" href="{{url('/discounts').'/'.$discount->id.'/edit'}}">Edit</a></td>
     <td>
       <form action="{{url('/discounts').'/'.$discount->id}}" method="POST">

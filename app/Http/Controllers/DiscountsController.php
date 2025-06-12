@@ -67,7 +67,9 @@ class DiscountsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $discount = Discount::find($id);
+        $weartypes = Weartype::select('weartypes_name')->get();
+        return view('admin.discounts.detail',['weartypes'=>$weartypes, 'discount'=>$discount]);
     }
 
     /**
@@ -75,7 +77,9 @@ class DiscountsController extends Controller
      */
     public function edit(string $id)
     {
-        print_r('edit');
+        $discount = Discount::find($id);
+        $weartypes = Weartype::select('weartypes_name')->get();
+        return view('admin.discounts.edit',['weartypes'=>$weartypes, 'discount'=>$discount]);
     }
 
     /**
@@ -83,7 +87,36 @@ class DiscountsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $discount = Discount::find($id);
+
+        $request->validate([
+            'discountname'=>'required|min:3|max:12',
+            'discountpercentage'=>'required|numeric|between:0,100',
+            'startdate'=>'required|date|after:today',
+            'enddate'=>'required|date|after:startdate',
+        ],[
+            'discountname.required'=>'The discount name field is required.',
+            'discountname.min'=>'The discount name field must be at least 3 characters.',
+            'discountname.max'=>'The discount name field must not be greater than 12 characters.',
+            'discountpercentage.required'=>'The discount percentage field is required.',
+            'discountpercentage.numeric'=>'The discount percentage field must be numeric.',
+            'discountpercentage.between'=>'The discount percentage field must be between 0 to 100.',
+            'startdate.required'=>'The start date field is required.',
+            'startdate.date'=>'The start date field is invalid.',
+            'startdate.after'=>'The start date field is valid from tomorrrow.',
+            'enddate.required'=>'The end date field is required.',
+            'enddate.date'=>'The end date field is invalid.',
+            'enddate.after'=>'The end date field must be greater than start date.'
+        ]);
+
+        $discount->update([
+            'discount_label' => $request->discountname,
+            'discount_percentage' => $request->discountpercentage,
+            'start_date' => $request->startdate,
+            'end_date' => $request->enddate
+        ]);
+
+        return redirect(url('/discounts'))->with('success', 'Brand updated successfully.');
     }
 
     /**
