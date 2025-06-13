@@ -63,10 +63,6 @@ class UserController extends Controller
                 'rdate.required' => 'The registration date field is required.'
             ]
         );
-
-        //echo "<pre>";
-        //print_r($request->all());
-        //die();
         
         $user = new User();
         $user->username = $request->username;
@@ -108,19 +104,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        echo "Create";
         $weartypes = Weartype::select('weartypes_name')->get();
         return view('admin.users.add', ['weartypes'=>$weartypes]);
-
-/*        $user = User::find(1);
-        $sale = $user->sale; // Get the sale associated with the user
-
-        $users = User::with('sale')->get(); // Eager load the sale relationship
-
-
-        echo "<pre>";
-        print_r($users);
-        echo "</pre>";*/
     }
 
     /**
@@ -128,8 +113,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        echo "<pre>";
-        print_r($request->all());
         $request->validate([
             'username'=>'required|min:3|max:12',
             'password'=> ['required', 'min:3', 'max:12', new password],

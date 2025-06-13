@@ -171,7 +171,7 @@
                         @if(!Auth::check())
                             <div class="navbar-nav ml-auto py-0">
                                 <a href="{{url('/login')}}" class="nav-item nav-link">Login</a>
-                                <a href="{{url('/user/create')}}" class="nav-item nav-link">Register</a>
+                                <a href="{{url('/registration')}}" class="nav-item nav-link">Register</a>
                             </div>
                         @else
                             <div class="navbar-nav ml-auto py-0">

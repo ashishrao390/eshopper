@@ -5,7 +5,7 @@
 <div class="container">
   <!-- Content here -->
 
-<form method="POST" action="{{url('/')}}/user/">
+<form method="POST" action="{{url('/registration')}}">
     @csrf
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">User Name</label>

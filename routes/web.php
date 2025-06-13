@@ -43,8 +43,8 @@ Route::get('/checkout', [CheckoutController::class, 'index']);
 
 Route::get('/contact', [ContactController::class, 'index']);
 
-//Route::get('/registration', [UserController::class, 'getUserRegistration']);
-//Route::post('/registration', [UserController::class, 'postUserRegistration']);
+Route::get('/registration', [UserController::class, 'getUserRegistration']);
+Route::post('/registration', [UserController::class, 'postUserRegistration']);
 
 Route::get('/login', [LoginController::class, 'getUserLogin'])->name('login');
 Route::post('/login', [LoginController::class, 'postUserLogin'])->name('login.perform');
@@ -165,8 +165,8 @@ Route::post('/admin/select-email', [AdminController::class, 'selectEmail']);
 
 Route::middleware(['admin'])->prefix('user')->group(function(){
     Route::get('/', [UserController::class, 'index']);
-    Route::get('/create',[UserController::class, 'getUserRegistration']);
-    Route::post('/',[UserController::class, 'postUserRegistration']);
+//    Route::get('/create',[UserController::class, 'getUserRegistration']);
+//    Route::post('/',[UserController::class, 'postUserRegistration']);
     Route::get('/{id}',[UserController::class, 'show']);
     Route::get('/{id}/edit',[UserController::class, 'edit']);
     Route::patch('/{id}',[UserController::class, 'update']);

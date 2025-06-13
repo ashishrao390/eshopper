@@ -8,9 +8,6 @@
         <div class="col">
             <h2>Users List</h2>
         </div>
-        <div class="col">
-            <a href="{{url('/user/create')}}" type="button" class="btn btn-primary btn-lg">Add User</a>
-        </div>
     </div>    
 @if(session()->has('success'))
     <x-notification-component msg="{{session()->get('success')}}" cls="success"/>
@@ -37,8 +34,6 @@
     <th>Email Verified</th>
     <th>Created at</th>
     <th>Updated at</th>
-    <th>Edit</th>
-    <th>Delete</th>
   </tr>
   @foreach($users as $user)
   <tr>
@@ -60,14 +55,6 @@
     <td>{{$user->email_verified_at}}</td>
     <td>{{date_format(date_create($user->created_at),"d-m-Y h:m:s")}}</td>
     <td>{{date_format(date_create($user->updated_at), "d-m-Y h:m:s")}}</td>
-    <td><a class="btn btn-link" href="{{url('/user').'/'.$user->id.'/edit'}}">Edit</a></td>
-    <td>
-      <form action="{{url('/user').'/'.$user->id}}" method="POST">
-        @csrf
-        @method('DELETE')
-        <button class="btn btn-link" type="submit">Delete</button>
-      </form>
-    </td>
   </tr>
   @endforeach
 </table>
