@@ -26,10 +26,6 @@ class SalesController extends Controller
         echo "Create";
         $weartypes = Weartype::select('weartypes_name')->get();
         return view('admin.sales.add', ['weartypes'=>$weartypes]);
-/*        $data = Sale::with(['user','product','discount'])->find(94);
-        echo "<pre>";
-            print_r($data);
-        echo "</pre>";*/
     }
 
     /**

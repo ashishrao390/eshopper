@@ -7,9 +7,6 @@
         <div class="col">
             <h2>Sales List</h2>
         </div>
-        <div class="col">
-            <a href="{{url('/sales/create')}}" type="button" class="btn btn-primary btn-lg">Add Sale</a>
-        </div>
     </div>    
     @if(session()->has('success'))
         <x-notification-component msg="{{session()->get('success')}}" cls="success"/>
@@ -27,8 +24,6 @@
             <th>Sales Price</th>
             <th>Created At</th>
             <th>Updated At</th>
-            <th>Edit</th>
-            <th>Delete</th>
         </tr>
         @foreach($sales as $sale)
         <tr>
@@ -41,14 +36,6 @@
             <td>{{$sale->sales_price}}</td>
             <td>{{date_format(date_create($sale->created_at), "d-m-Y h:m:s")}}</td>
             <td>{{date_format(date_create($sale->updated_at), "d-m-Y h:m:s")}}</td>
-            <td><a class="btn btn-link" href="{{url('/sales').'/'.$sale->id.'/edit'}}">Edit</a></td>
-            <td>
-                <form action="{{url('/sales').'/'.$sale->id}}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-link">Delete</button>
-                </form>
-            </td>
         </tr>
         @endforeach
     </table>
