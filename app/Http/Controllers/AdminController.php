@@ -25,8 +25,6 @@ class AdminController extends Controller
      */
     public function create()
     {
-        echo "Create";
-        //return view('registration');
         $weartypes = Weartype::select('weartypes_name')->get();
         $users = User::select('id','email')->get();
         return view('admin.admin.add',['weartypes'=>$weartypes, 'users'=>$users]);
@@ -56,15 +54,20 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        echo "<pre>";
-        print_r($request->all());
         $request->validate([
             'selectemail'=>'required'
         ],
         [
-            'selectemail.required' => 'The email  is required.',
-        ]
-    );
+            'selectemail.required' => 'The email  is required.'
+        ]);
+
+        Admin::create([
+            'user_id' => $request->selectemail,
+            'role_id' => 1,
+            'role_name' => 'Super Admin'
+        ]);
+
+        return redirect(url('/admin'))->with('success', 'Admin created successfully.');
     }
 
     /**
@@ -72,7 +75,11 @@ class AdminController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $admin = Admin::find($id);
+        $admin_user_id = $admin->user_id;
+        $users = User::find($admin_user_id);
+        $weartypes = Weartype::select('weartypes_name')->get();
+        return view('admin.admin.detail',['weartypes'=>$weartypes, 'users'=>$users, 'admin'=>$admin]);
     }
 
     /**

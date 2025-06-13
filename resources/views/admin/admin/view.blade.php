@@ -24,7 +24,7 @@
             <td>Role Name</td>
             <td>Created At</td>
             <td>Updated At</td>
-            <td>Edit</td>
+            <td>View</td>
             <td>Delete</td>
         </tr>
         @foreach($admins as $admin)
@@ -35,7 +35,7 @@
             <td>{{$admin->role_name}}</td>
             <td>{{date_format(date_create($admin->created_at), "d-m-Y h:m:s")}}</td>
             <td>{{date_format(date_create($admin->updated_at), "d-m-Y h:m:s")}}</td>
-            <td><a class="btn btn-link" href="{{url('/admin').'/'.$admin->id.'/edit'}}">Edit</a></td>
+            <td><a class="btn btn-link" href="{{url('/admin').'/'.$admin->id}}">View</a></td>
             <td>
                 <form method="POST" action="{{url('/admin').'/'.$admin->id}}">
                     @csrf
