@@ -99,6 +99,7 @@
         @endif
       @error('image')<x-message-component msg={{$message}} cls="danger"/>@enderror
     </div>
+    <a class="btn btn-primary" href="{{url('/products')}}">Products</a>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 </div>
