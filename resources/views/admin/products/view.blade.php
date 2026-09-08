@@ -31,6 +31,7 @@
     <th>Dicount</th>
     <th>Description</th>
     <th>Image URL</th>
+    <th>View</th>
     <th>Edit</th>
     <th>Delete</th>
   </tr>
@@ -48,6 +49,7 @@
     <td>{{$product->discount['discount_percentage']}} %</td>
     <td>{{substr($product->description,0,50)}}...</td>
     <td>{{$product->image_url}}</td>
+    <td><a class="btn btn-link" href="{{url('/products').'/'.$product->id}}">View</a></td>
     <td><a class="btn btn-link" href="{{url('/products').'/'.$product->id.'/edit'}}">Edit</a></td>
     <td>
       <form action="{{url('/products').'/'.$product->id}}" method="POST">

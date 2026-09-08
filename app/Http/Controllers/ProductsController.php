@@ -30,7 +30,6 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        echo "Create";
         $brand = Brand::select('id', 'brand_name')->get();
         $category = Category::select('id', 'category_name')->get();
         $weartypes = Weartype::select('id', 'weartypes_name')->get();
@@ -46,8 +45,6 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        echo "<pre>";
-        print_r($request->all());
         $request->validate([
             'productname'=>'required|min:3|max:12',
             'brand'=>'required|exists:brands,id',
@@ -92,16 +89,31 @@ class ProductsController extends Controller
             'image.dimensions'=>'The minimum width & height is 100 and maximum width & height is 2000.'
         ]);
 
+        $originalName = $request->file('image')->getClientOriginalName();
+        $filename = time() . '_' . $originalName;
+
         if($request->hasFile('image')){
-            $tempImagePath = $request->file('image')->store('temp','public');
+            $tempImagePath = $request->file('image')->storeAs('uploads/users', $filename, 'public');
             session(['temp_image' => $tempImagePath]);
         }
 
         $imagePath = session('temp_image') ? Storage::move('public/'.session('temp_image'), 'public/images/'.basename(session('temp_image'))) : null;
 
-
+        Product::create([
+            'product_name' => $request->productname,
+            'brand_id' => $request->brand,
+            'category_id' => $request->category,
+            'weartype_id' => $request->weartype,
+            'gender_id' => $request->gender,
+            'color_id' => $request->color,
+            'size_id' => $request->size,
+            'price' => $request->price,
+            'discount_id' => $request->discounts,
+            'description' => $request->description,
+            'image_url' => $filename
+        ]);
         
-        //session()->forget('temp_image');
+        return redirect(url('/products'))->with('success', 'Product created successfully.');
     }
 
     /**
@@ -109,7 +121,18 @@ class ProductsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $weartypes = Weartype::select('weartypes_name')->get();
+
+        $product = Product::find($id);
+        $brand = Brand::select('id', 'brand_name')->where('id', $product->brand_id)->get();
+        $category = Category::select('id', 'category_name')->where('id', $product->category_id)->get();
+        $weartype = Weartype::select('id', 'weartypes_name')->where('id', $product->weartype_id)->get();
+        $gender = Gender::select('id', 'gender_name')->where('id', $product->gender_id)->get();
+        $color = Color::select('id', 'color_name')->where('id', $product->color_id)->get();
+        $size = Size::select('id', 'size_label')->where('id', $product->size_id)->get();
+        $discount = Discount::select('id', 'discount_label', 'discount_percentage')->where('id', $product->discount_id)->get();
+
+        return view('admin.products.detail',['product'=>$product, 'brands'=>$brand[0], 'categories'=>$category[0], 'weartypes'=>$weartypes, 'weartype'=>$weartype[0], 'genders'=>$gender[0], 'colors'=>$color[0], 'sizes'=>$size[0], 'discounts'=>$discount[0]]);
     }
 
     /**
@@ -117,7 +140,18 @@ class ProductsController extends Controller
      */
     public function edit(string $id)
     {
-        print_r('edit');
+        $weartypes = Weartype::select('weartypes_name')->get();
+
+        $product = Product::find($id);
+        $brand = Brand::select('id', 'brand_name')->where('id', $product->brand_id)->get();
+        $category = Category::select('id', 'category_name')->where('id', $product->category_id)->get();
+        $weartype = Weartype::select('id', 'weartypes_name')->where('id', $product->weartype_id)->get();
+        $gender = Gender::select('id', 'gender_name')->where('id', $product->gender_id)->get();
+        $color = Color::select('id', 'color_name')->where('id', $product->color_id)->get();
+        $size = Size::select('id', 'size_label')->where('id', $product->size_id)->get();
+        $discount = Discount::select('id', 'discount_label', 'discount_percentage')->where('id', $product->discount_id)->get();
+
+        return view('admin.products.detail',['product'=>$product, 'brands'=>$brand[0], 'categories'=>$category[0], 'weartypes'=>$weartypes, 'weartype'=>$weartype[0], 'genders'=>$gender[0], 'colors'=>$color[0], 'sizes'=>$size[0], 'discounts'=>$discount[0]]);
     }
 
     /**

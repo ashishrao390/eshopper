@@ -9,6 +9,25 @@ class Product extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [ 
+        'product_name', // Add this line
+        'brand_id',
+        'category_id',
+        'weartype_id',
+        'gender_id',
+        'color_id',
+        'size_id',
+        'price',
+        'discount_id',
+        'description',
+        'image_url'
+    ];
+
     public function sale(){
         return $this->hasMany(Sale::class);
     }
