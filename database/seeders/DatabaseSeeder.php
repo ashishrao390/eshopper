@@ -22,16 +22,16 @@ class DatabaseSeeder extends Seeder
 
         $this->call(
             [
-                //BrandSeeder::class,
-                //CategorySeeder::class,
-                //ColorSeeder::class
-                //DiscountSeeder::class
-                //SizeSeeder::class
-                //WearTypeSeeder::class
-                //UserSeeder::class
-                //ProductSeeder::class
-                //StockSeeder::class
-                //SaleSeeder::class
+                BrandSeeder::class,
+                CategorySeeder::class,
+                ColorSeeder::class,
+                DiscountSeeder::class,
+                SizeSeeder::class,
+                WearTypeSeeder::class,
+                UserSeeder::class,
+                ProductSeeder::class,
+                StockSeeder::class,
+                SaleSeeder::class
             ]
             );
     }
